@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cálculo de IMC - Vue.js</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #app {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      padding: 10px 0;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .resultado {
+      margin-top: 20px;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>Cálculo de IMC</h2>
+    <input type="number" v-model.number="peso" placeholder="Peso en kg" min="1" />
+    <input type="number" v-model.number="altura" placeholder="Altura en metros" step="0.01" min="0.5" />
+    <button @click="calcularIMC">Calcular IMC</button>
+    <div class="resultado" v-if="imc">
+      Tu IMC es: {{ imc.toFixed(2) }} - <span>{{ categoria }}</span>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          peso: null,
+          altura: null,
+          imc: null,
+          categoria: ''
+        }
+      },
+      methods: {
+        calcularIMC() {
+          if (!this.peso || !this.altura) {
+            alert('Por favor ingresa peso y altura válidos')
+            return
+          }
+          this.imc = this.peso / (this.altura * this.altura)
+
+          if (this.imc < 18.5) {
+            this.categoria = 'Bajo peso'
+          } else if (this.imc < 25) {
+            this.categoria = 'Normal'
+          } else if (this.imc < 30) {
+            this.categoria = 'Sobrepeso'
+          } else {
+            this.categoria = 'Obesidad'
+          }
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

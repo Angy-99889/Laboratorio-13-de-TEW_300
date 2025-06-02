@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculadora Básica - Vue.js</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #app {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1.2rem;
+    }
+    .botones button {
+      width: 65px;
+      height: 50px;
+      font-size: 1.2rem;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+    }
+    .botones button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>Calculadora Básica</h2>
+    <input type="text" v-model="pantalla" readonly />
+    <div class="botones">
+      <div>
+        <button @click="agregar('7')">7</button>
+        <button @click="agregar('8')">8</button>
+        <button @click="agregar('9')">9</button>
+        <button @click="agregar('/')">/</button>
+      </div>
+      <div>
+        <button @click="agregar('4')">4</button>
+        <button @click="agregar('5')">5</button>
+        <button @click="agregar('6')">6</button>
+        <button @click="agregar('*')">*</button>
+      </div>
+      <div>
+        <button @click="agregar('1')">1</button>
+        <button @click="agregar('2')">2</button>
+        <button @click="agregar('3')">3</button>
+        <button @click="agregar('-')">-</button>
+      </div>
+      <div>
+        <button @click="agregar('0')">0</button>
+        <button @click="agregar('.')">.</button>
+        <button @click="calcular()">=</button>
+        <button @click="agregar('+')">+</button>
+      </div>
+      <div>
+        <button @click="limpiar()">C</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          pantalla: ''
+        }
+      },
+      methods: {
+        agregar(valor) {
+          this.pantalla += valor
+        },
+        calcular() {
+          try {
+            this.pantalla = eval(this.pantalla).toString()
+          } catch {
+            this.pantalla = 'Error'
+          }
+        },
+        limpiar() {
+          this.pantalla = ''
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
